@@ -1,0 +1,158 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+<!DOCTYPE html>\
+<html lang="en">\
+<head>\
+<meta charset="UTF-8">\
+<meta name="viewport"\
+      content="width=device-width,initial-scale=1">\
+<title>My Mochi</title>\
+\
+<style>\
+  * \{ box-sizing: border-box; \}\
+\
+  body \{\
+    margin: 0;\
+    min-height: 100dvh;\
+    display: grid;\
+    place-content: center;\
+    gap: 30px;\
+    background: #e8e5df;\
+    font-family: system-ui, sans-serif;\
+    text-align: center;\
+  \}\
+\
+  .mochi \{\
+    width: 280px;\
+    height: 240px;\
+    border: 12px solid #f9f8f3;\
+    border-radius: 48px;\
+    background: #111;\
+    display: flex;\
+    align-items: center;\
+    justify-content: center;\
+    gap: 36px;\
+    cursor: pointer;\
+    box-shadow: 0 18px 35px #0002;\
+    -webkit-tap-highlight-color: transparent;\
+  \}\
+\
+  .eye \{\
+    width: 40px;\
+    height: 75px;\
+    border-radius: 50%;\
+    background: #fff;\
+    transition: all 0.22s ease;\
+  \}\
+\
+  .mochi.blink .eye \{\
+    transform: scaleY(0.06);\
+  \}\
+\
+  .mochi.happy .eye \{\
+    height: 42px;\
+    border-radius: 50% 50% 12px 12px;\
+    transform: rotate(-10deg);\
+  \}\
+\
+  .mochi.sleepy .eye \{\
+    height: 9px;\
+    border-radius: 15px;\
+  \}\
+\
+  .mochi.surprised .eye \{\
+    width: 57px;\
+    height: 90px;\
+  \}\
+\
+  button \{\
+    padding: 12px 17px;\
+    border: 0;\
+    border-radius: 22px;\
+    background: #222;\
+    color: white;\
+    cursor: pointer;\
+  \}\
+\
+  .controls \{\
+    display: flex;\
+    flex-wrap: wrap;\
+    justify-content: center;\
+    gap: 8px;\
+  \}\
+</style>\
+</head>\
+\
+<body>\
+  <main>\
+    <div id="mochi" class="mochi"\
+         role="button" tabindex="0"\
+         aria-label="Tap Mochi">\
+      <div class="eye"></div>\
+      <div class="eye"></div>\
+    </div>\
+    <h2 id="status">Hello, friend!</h2>\
+  </main>\
+\
+  <div class="controls">\
+    <button onclick="mood('happy')">Happy</button>\
+    <button onclick="mood('sleepy')">Sleep</button>\
+    <button onclick="mood('surprised')">Surprise</button>\
+    <button onclick="mood('normal')">Reset</button>\
+  </div>\
+\
+<script>\
+  const mochi = document.getElementById("mochi");\
+  const status = document.getElementById("status");\
+  let currentMood = "normal";\
+\
+  function mood(name) \{\
+    currentMood = name;\
+    mochi.className = "mochi";\
+    if (name !== "normal") mochi.classList.add(name);\
+    const messages = \{\
+      normal: "Hello, friend!",\
+      happy: "You're my favorite!",\
+      sleepy: "Zzz... sleepy...",\
+      surprised: "Whoa!"\
+    \};\
+    status.textContent = messages[name];\
+  \}\
+\
+  function blink() \{\
+    if (currentMood === "normal") \{\
+      mochi.classList.add("blink");\
+      setTimeout(() => mochi.classList.remove("blink"), 140);\
+    \}\
+  \}\
+\
+  function scheduleBlink() \{\
+    setTimeout(() => \{\
+      blink();\
+      scheduleBlink();\
+    \}, 1800 + Math.random() * 3000);\
+  \}\
+\
+  mochi.addEventListener("click", () => \{\
+    mood("happy");\
+    setTimeout(() => mood("normal"), 1600);\
+  \});\
+\
+  mochi.addEventListener("keydown", event => \{\
+    if (event.key === "Enter" || event.key === " ") \{\
+      event.preventDefault();\
+      mochi.click();\
+    \}\
+  \});\
+\
+  scheduleBlink();\
+</script>\
+</body>\
+</html>\
+}
